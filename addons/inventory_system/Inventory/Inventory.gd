@@ -86,7 +86,8 @@ func _on_button_pressed(container_index: int, index: int) -> void:
 	print("Button Pressed at index: %d:%d" % [container_index, index])
 	if container_index == -1:
 		if equipped_bags[index] != null:
-			get_node("GridContainer").get_child(index).show()	
+			var grid_container = get_node("GridContainer").get_child(index)	
+			grid_container.visible = !grid_container.visible
 
 func _on_swap_items(source_container: String, destination_container: String, source_container_index: int, source_index: int, target_container_index: int, target_index: int) -> void:
 	print("Swap items in %s from %d:%d to %d:%d" % [source_container, source_container_index, source_index, target_container_index, target_index])
@@ -110,3 +111,35 @@ func _on_swap_items(source_container: String, destination_container: String, sou
 				get_node("GridContainer").get_child(source_container_index).get_node("%GridContainer").get_child(source_index).icon = null
 			else:
 				print("Failed to move item, target is not empty")
+
+	elif source_container == "BagBar" && destination_container == "ContainerGrid": # Moving from bag bar to container grid
+		if equipped_bags[source_index] == null:
+			print("No item to move")
+		elif inventory_items[target_container_index][target_index] == null: # Target is empty, move the item
+			# Check if the bag inventory contains any items, if so we cannot move the bag
+			for item in inventory_items[source_index]:
+				if item != null:
+					print("Cannot move bag, it contains items")
+					return
+			# Check if we are trying to move the bag into itself
+			if source_index == target_container_index:
+				print("Cannot move bag into itself")
+				return
+			# Move the bag
+			inventory_items[target_container_index].set(target_index, equipped_bags[source_index])
+			equipped_bags.set(source_index, null)
+			get_node("GridContainer").get_child(target_container_index).get_node("%GridContainer").get_child(target_index).icon = inventory_items[target_container_index][target_index].item_icon
+			get_node("GridContainer").get_child(source_index).hide()
+			get_node("BagBar/%GridContainer").get_child(source_index).icon = null
+		else:
+			print("Failed to move item, target is not empty")
+	elif source_container == "ContainerGrid" && destination_container == "BagBar": # Moving from container grid to bag bar
+		if inventory_items[source_container_index][source_index] == null:
+			print("No item to move")
+		elif inventory_items[source_container_index][source_index].item_type != Item.ItemType.BAG:
+			print("Cannot move item, only bags can be moved to the bag bar")
+		elif equipped_bags[target_index] == null: # Target is empty, move the item
+			equipped_bags.set(target_index, inventory_items[source_container_index][source_index])
+			inventory_items[source_container_index].set(source_index, null)
+			get_node("BagBar/%GridContainer").get_child(target_index).icon = equipped_bags[target_index].item_icon
+			get_node("GridContainer").get_child(source_container_index).get_node("%GridContainer").get_child(source_index).icon = null
