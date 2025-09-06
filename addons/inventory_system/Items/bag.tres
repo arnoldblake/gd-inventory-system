@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://dn5npv7ssmal"]
+
+[ext_resource type="Script" uid="uid://cr26drai2nvto" path="res://InventorySystem/Items/item.gd" id="1_ojchy"]
+[ext_resource type="Texture2D" uid="uid://bqvgvjj3lna8b" path="res://InventorySystem/Assets/kenney_generic-items/PNG/Colored/genericItem_color_144.png" id="1_ytkwt"]
+
+[resource]
+script = ExtResource("1_ojchy")
+item_name = "Bag"
+item_icon = ExtResource("1_ytkwt")
+item_description = "A Bag"
+item_type = 1
+container_size = 8
+is_stackable = false
+metadata/_custom_type_script = "uid://cr26drai2nvto"

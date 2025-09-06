@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://bpg3rao4twg3"]
+
+[ext_resource type="Texture2D" uid="uid://iewnpfx3pmp7" path="res://InventorySystem/Assets/kenney_generic-items/PNG/Colored/genericItem_color_090.png" id="1_1qldj"]
+[ext_resource type="Script" uid="uid://cr26drai2nvto" path="res://InventorySystem/Items/item.gd" id="1_jyeai"]
+
+[resource]
+script = ExtResource("1_jyeai")
+item_name = "Blue Pill"
+item_icon = ExtResource("1_1qldj")
+item_description = "A blue pill"
+item_type = 0
+container_size = 0
+metadata/_custom_type_script = "uid://cr26drai2nvto"

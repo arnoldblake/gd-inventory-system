@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=3 uid="uid://e10g0gqdh144"]
+
+[ext_resource type="Script" uid="uid://dty8qg2mos4et" path="res://addons/inventory_system/Inventory/Inventory.gd" id="1_3n7vm"]
+[ext_resource type="Script" uid="uid://cr26drai2nvto" path="res://addons/inventory_system/Items/item.gd" id="2_orgsn"]
+[ext_resource type="Resource" uid="uid://dn5npv7ssmal" path="res://addons/inventory_system/Items/bag.tres" id="3_nednh"]
+[ext_resource type="Resource" uid="uid://cxdbpirgnupi2" path="res://addons/inventory_system/Items/red_pill.tres" id="4_5fx2v"]
+[ext_resource type="Resource" uid="uid://bpg3rao4twg3" path="res://addons/inventory_system/Items/blue_pill.tres" id="5_miskq"]
+
+[sub_resource type="Theme" id="Theme_3ghou"]
+
+[node name="Inventory" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_3n7vm")
+starter_items = Array[ExtResource("2_orgsn")]([ExtResource("3_nednh"), ExtResource("4_5fx2v"), ExtResource("5_miskq")])
+
+[node name="BagBar" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="BagBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="BagGrid" type="GridContainer" parent="BagBar/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_3ghou")
+columns = 5
+
+[node name="BagGrid" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+columns = 2
+
+[node name="Bag" type="PanelContainer" parent="BagGrid"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="BagGrid/Bag"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BagGrid/Bag/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BagGrid/Bag/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="BagGrid/Bag/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Inventory"
+
+[node name="CloseButton" type="Button" parent="BagGrid/Bag/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_horizontal = 10
+text = "X"
+
+[node name="ContainerGrid" type="GridContainer" parent="BagGrid/Bag/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 3
