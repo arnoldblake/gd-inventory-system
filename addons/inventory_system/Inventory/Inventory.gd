@@ -53,6 +53,8 @@ func _ready() -> void:
 		var inventory_container: PanelContainer = inventory_container_scene.instantiate()
 		get_node("GridContainer").add_child(inventory_container)
 		inventory_container.hide()
+		var close_button = inventory_container.get_node("%CloseButton")
+		close_button.pressed.connect(inventory_container.hide)
 
 	# If a bag is equipped, populate the inventory grid with buttons
 	for i in equipped_bags.size():
@@ -86,17 +88,19 @@ func _on_button_pressed(index: int) -> void:
 func _on_swap_items(source_container: String, destination_container: String, source_container_index: int, source_index: int, target_container_index: int, target_index: int) -> void:
 	print("Swap items in %s from %d:%d to %d:%d" % [source_container, source_container_index, source_index, target_container_index, target_index])
 
-	if inventory_items[source_container_index][source_index] == null:
-		print("No item to move")
-	elif source_container == destination_container: # Same container movement
+	if source_container == destination_container: # Same container movement
 		if source_container == "BagBar":
-			if equipped_bags[target_index] == null: # Target is empty, move the item
+			if equipped_bags[source_index] == null:
+				print("No item to move")
+			elif equipped_bags[target_index] == null: # Target is empty, move the item
 				equipped_bags.set(target_index, equipped_bags[source_index])
 				equipped_bags.set(source_index, null)
 				get_node("BagBar/%GridContainer").get_child(target_index).icon = equipped_bags[target_index].item_icon
 				get_node("BagBar/%GridContainer").get_child(source_index).icon = null
 		elif source_container == "ContainerGrid":
-			if inventory_items[target_container_index][target_index] == null: # Target is empty, move the item
+			if inventory_items[source_container_index][source_index] == null:
+				print("No item to move")
+			elif inventory_items[target_container_index][target_index] == null: # Target is empty, move the item
 				inventory_items[target_container_index].set(target_index, inventory_items[source_container_index][source_index])
 				inventory_items[source_container_index].set(source_index, null)
 				get_node("GridContainer").get_child(target_container_index).get_node("%GridContainer").get_child(target_index).icon = inventory_items[target_container_index][target_index].item_icon
