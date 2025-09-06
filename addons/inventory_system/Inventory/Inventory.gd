@@ -22,10 +22,11 @@ func _ready() -> void:
 	equipped_bags.resize(5)
 	inventory_items.resize(5)
 	var bag_bar: PanelContainer = inventory_container_scene.instantiate()
-	bag_bar.name = "InventoryContainer"
+	bag_bar.name = "BagBar"
 	bag_bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	bag_bar.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	add_child(bag_bar)
+
 	for item in starter_items:
 		if item.item_type == Item.ItemType.BAG:
 			for i in equipped_bags.size():
@@ -44,9 +45,9 @@ func _ready() -> void:
 							i[j] = item.duplicate()
 							break
 
-	var bag_grid = get_node("InventoryContainer/MarginContainer/VBoxContainer/ContainerGrid")
+	var bag_grid = bag_bar.get_node("%GridContainer") as GridContainer
 	bag_grid.columns = BAG_SLOTS
-	get_node("InventoryContainer/MarginContainer/VBoxContainer/HBoxContainer").hide()
+	bag_bar.get_node("MarginContainer/VBoxContainer/HBoxContainer").hide()
 	for n in BAG_SLOTS:
 		var button = create_button() 
 		if equipped_bags[n] != null && equipped_bags.size() > n:
@@ -56,13 +57,16 @@ func _ready() -> void:
 		button.pressed.connect(_on_button_pressed.bind(button.get_index()))
 		button.connect("swap_items", _on_swap_items)
 
-	var container_grid = get_node("BagGrid/InventoryContainer/MarginContainer/VBoxContainer/ContainerGrid")
+	var inventory_container: PanelContainer = inventory_container_scene.instantiate()
+	get_node("GridContainer").add_child(inventory_container)
+	var grid_container = inventory_container.get_node("%GridContainer") as GridContainer
 	for n in equipped_bags.size():
 		if equipped_bags[n] != null && equipped_bags[n].container_size > 0:
 			for i in equipped_bags[n].container_size:
 				var button = create_button() 
 				button.parent_container = "ContainerGrid" 
-				container_grid.add_child(button)
+				button.container_index = n
+				grid_container.add_child(button)
 				button.pressed.connect(_on_button_pressed.bind(button.get_index()))
 				button.connect("swap_items", _on_swap_items)
 				
@@ -72,16 +76,18 @@ func _ready() -> void:
 func _on_button_pressed(index: int) -> void:
 	print("Button Pressed at index: %d" % index)
 
-func _on_swap_items(source_container: String, destination_container: String, source_index: int, target_index: int) -> void:
-	print("Swap items in %s from %d to %d" % [source_container, source_index, target_index])
-	if source_container == destination_container:
+func _on_swap_items(source_container: String, destination_container: String, source_container_index: int, source_index: int, target_container_index: int, target_index: int) -> void:
+	print("Swap items in %s from %d:%d to %d:%d" % [source_container, source_container_index, source_index, target_container_index, target_index])
+	if source_container == destination_container: # Same container movement
 		if source_container == "BagBar":
-			equipped_bags.set(target_index, equipped_bags[source_index])
-			equipped_bags.set(source_index, null)
-			get_node("InventoryContainer/MarginContainer/VBoxContainer/ContainerGrid").get_child(target_index).icon = equipped_bags[target_index].item_icon
-			get_node("InventoryContainer/MarginContainer/VBoxContainer/ContainerGrid").get_child(source_index).icon = null
+			if equipped_bags[target_index] == null: # Target is empty, move the item
+				equipped_bags.set(target_index, equipped_bags[source_index])
+				equipped_bags.set(source_index, null)
+				get_node("BagBar/%GridContainer").get_child(target_index).icon = equipped_bags[target_index].item_icon
+				get_node("BagBar/%GridContainer").get_child(source_index).icon = null
 		elif source_container == "ContainerGrid":
-			inventory_items[0].set(target_index, inventory_items[0][source_index])
-			inventory_items[0].set(source_index, null)
-			get_node("BagGrid/InventoryContainer/MarginContainer/VBoxContainer/ContainerGrid").get_child(target_index).icon = inventory_items[0][target_index].item_icon
-			get_node("BagGrid/InventoryContainer/MarginContainer/VBoxContainer/ContainerGrid").get_child(source_index).icon = null
+			if inventory_items[target_container_index][target_index] == null: # Target is empty, move the item
+				inventory_items[target_container_index].set(target_index, inventory_items[source_container_index][source_index])
+				inventory_items[source_container_index].set(source_index, null)
+				get_node("GridContainer").get_child(target_container_index).get_node("%GridContainer").get_child(target_index).icon = inventory_items[target_container_index][target_index].item_icon
+				get_node("GridContainer").get_child(source_container_index).get_node("%GridContainer").get_child(source_index).icon = null

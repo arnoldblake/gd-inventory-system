@@ -26,6 +26,7 @@ layout_mode = 2
 size_flags_horizontal = 10
 text = "X"
 
-[node name="ContainerGrid" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 columns = 3

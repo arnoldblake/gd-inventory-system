@@ -21,11 +21,8 @@ script = ExtResource("1_3n7vm")
 starter_items = Array[ExtResource("2_orgsn")]([ExtResource("3_nednh"), ExtResource("4_5fx2v"), ExtResource("5_miskq")])
 inventory_container_scene = ExtResource("6_qw7jk")
 
-[node name="BagGrid" type="GridContainer" parent="."]
+[node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 columns = 2
-
-[node name="InventoryContainer" parent="BagGrid" instance=ExtResource("6_qw7jk")]
-layout_mode = 2
