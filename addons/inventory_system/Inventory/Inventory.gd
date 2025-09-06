@@ -45,7 +45,7 @@ func _ready() -> void:
 			button.icon = equipped_bags[n].item_icon
 		button.parent_container = "BagBar"
 		bag_grid.add_child(button)
-		button.pressed.connect(_on_button_pressed.bind(button.get_index()))
+		button.pressed.connect(_on_button_pressed.bind(button.container_index, button.get_index()))
 		button.connect("swap_items", _on_swap_items)
 
 	# Instance the inventory containers and add to scene
@@ -67,7 +67,7 @@ func _ready() -> void:
 				button.parent_container = "ContainerGrid" 
 				button.container_index = i 
 				grid_container.add_child(button)
-				button.pressed.connect(_on_button_pressed.bind(button.get_index()))
+				button.pressed.connect(_on_button_pressed.bind(button.container_index, button.get_index()))
 				button.connect("swap_items", _on_swap_items)
 
 	for item in starter_items:
@@ -82,8 +82,11 @@ func _ready() -> void:
 					break
 			
 
-func _on_button_pressed(index: int) -> void:
-	print("Button Pressed at index: %d" % index)
+func _on_button_pressed(container_index: int, index: int) -> void:
+	print("Button Pressed at index: %d:%d" % [container_index, index])
+	if container_index == -1:
+		if equipped_bags[index] != null:
+			get_node("GridContainer").get_child(index).show()	
 
 func _on_swap_items(source_container: String, destination_container: String, source_container_index: int, source_index: int, target_container_index: int, target_index: int) -> void:
 	print("Swap items in %s from %d:%d to %d:%d" % [source_container, source_container_index, source_index, target_container_index, target_index])
