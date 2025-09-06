@@ -8,6 +8,16 @@ const BAG_SLOTS = 5
 @onready var equipped_bags: Array[Item] = []
 @onready var inventory_items: Array[Array] = []
 
+
+func create_button() -> Button:
+	var button = Button.new()
+	button.set_script(preload("res://addons/inventory_system/Inventory/Button.gd"))
+	button.expand_icon = true
+	button.custom_minimum_size = Vector2(64,64)
+	button.size = Vector2(64,64)
+	button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	return button
+
 func _ready() -> void:
 	equipped_bags.resize(5)
 	inventory_items.resize(5)
@@ -38,14 +48,9 @@ func _ready() -> void:
 	bag_grid.columns = BAG_SLOTS
 	get_node("InventoryContainer/MarginContainer/VBoxContainer/HBoxContainer").hide()
 	for n in BAG_SLOTS:
-		var button = Button.new()
-		button.set_script(preload("res://addons/inventory_system/Inventory/Button.gd"))
+		var button = create_button() 
 		if equipped_bags[n] != null && equipped_bags.size() > n:
 			button.icon = equipped_bags[n].item_icon
-		button.expand_icon = true
-		button.custom_minimum_size = Vector2(64,64)
-		button.size = Vector2(64,64)
-		button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		button.parent_container = "BagBar"
 		bag_grid.add_child(button)
 		button.pressed.connect(_on_button_pressed.bind(button.get_index()))
@@ -55,12 +60,7 @@ func _ready() -> void:
 	for n in equipped_bags.size():
 		if equipped_bags[n] != null && equipped_bags[n].container_size > 0:
 			for i in equipped_bags[n].container_size:
-				var button = Button.new()
-				button.set_script(preload("res://addons/inventory_system/Inventory/Button.gd"))
-				button.expand_icon = true
-				button.custom_minimum_size = Vector2(64,64)
-				button.size = Vector2(64,64)
-				button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+				var button = create_button() 
 				button.parent_container = "ContainerGrid" 
 				container_grid.add_child(button)
 				button.pressed.connect(_on_button_pressed.bind(button.get_index()))
