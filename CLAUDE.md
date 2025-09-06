@@ -4,16 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Godot 4.4 inventory system project written in GDScript. The project implements a minimal, opinionated inventory system with starter items and container support.
+This is a Godot 4.4 inventory system implemented as an addon plugin. The project creates a minimal, opinionated inventory system with drag-and-drop functionality, supporting bags as containers and starter items.
 
 ## Architecture
 
-The inventory system is built around two main components:
+### Plugin Structure
+This is structured as a Godot addon located in `addons/inventory_system/`:
+- `plugin.cfg`: Defines the plugin metadata (name: "Inventory System", author: "Blake Arnold")
+- `inventory_system.gd`: Main plugin script extending EditorPlugin (currently minimal)
+- The plugin is enabled in `project.godot` under `[editor_plugins]`
 
 ### Core Classes
-- `Item` (Items/item.gd): Resource class with ItemType enum (ITEM, BAG, KEY, QUEST) and properties: item_name, item_icon, item_description, item_type, container_size, is_stackable
-- `Inventory` (Inventory/Inventory.gd): MarginContainer with @tool directive that procedurally generates UI from equipped_bags and inventory_items arrays
-- `Button` (Inventory/Button.gd): Custom Button with drag-and-drop functionality, emits swap_items signal
+- `Item` (addons/inventory_system/Items/item.gd): Resource class with ItemType enum (ITEM, BAG, KEY, QUEST) and properties: item_name, item_icon, item_description, item_type, container_size, is_stackable, max_stack_size
+- `Inventory` (addons/inventory_system/Inventory/Inventory.gd): MarginContainer with @tool directive that procedurally generates UI from equipped_bags and inventory_items arrays
+- `Button` (addons/inventory_system/Inventory/Button.gd): Custom Button with drag-and-drop functionality, emits swap_items signal
 
 ### Key Design Patterns
 - Items are Godot Resources (.tres files) that can be duplicated and modified at runtime
@@ -41,25 +45,34 @@ The project includes VS Code launch configuration for debugging:
 - Debug options available: collisions, paths, navigation (currently disabled)
 
 ### File Structure
-- `Items/`: Contains item definitions (.gd script and .tres resources)
-- `Inventory/`: Contains inventory system code and scenes
-- `Assets/`: Art assets organized by source (kenney asset packs)
-- `project.godot`: Main project configuration
+- `addons/inventory_system/`: Main addon directory
+  - `Items/`: Contains item definitions (.gd script and .tres resources)
+  - `Inventory/`: Contains inventory system code and scenes (Inventory.tscn, InventoryContainer.tscn)
+  - `Assets/`: Art assets organized by source (kenney asset packs)
+  - `plugin.cfg`: Plugin configuration
+  - `inventory_system.gd`: Main plugin script
+- `project.godot`: Main project configuration with plugin enabled
 
 ## Working with Items
 - Item resources are defined in .tres files referencing the Item class
 - New items should extend the Item resource and define appropriate properties
 - Icons should reference textures in the Assets folder
-- Container items use container_size > 0 to provide additional inventory slots
+- Container items (bags) use container_size > 0 to provide additional inventory slots
+- Items support stacking with is_stackable boolean and max_stack_size property
 
 ## Scene Structure
-The main inventory scene (Inventory.tscn) uses UniqueNode names (%BagGrid, %ContainerGrid) for reliable node access from scripts. The scene includes:
-- MarginContainer root with starter_items Array[Item] property
-- BagBar/MarginContainer/%BagGrid for bag slots (populated procedurally)
-- Container/MarginContainer/%ContainerGrid for container contents (populated procedurally)
+The inventory system uses two main scenes:
+- `Inventory.tscn`: Main inventory scene with MarginContainer root and starter_items Array[Item] property
+- `InventoryContainer.tscn`: Template for individual bag containers with GridContainer and close button
+
+Key UniqueNode names for reliable script access:
+- `%GridContainer`: Used in both bag bar and container grids
+- `%CloseButton`: Close button for inventory containers
 
 ## Implementation Notes
 - The @tool directive allows inventory to update in the editor
 - Button indices correspond to array positions for item management
-- swap_items signal handles drag-and-drop with parent_container identification
-- Current limitation: container grid assumes single bag (inventory_items[0])
+- swap_items signal handles complex drag-and-drop logic between bag bar and container grids
+- Supports movement between bag slots, from bags to containers, and container to bag (bags only)
+- Container visibility is toggled by clicking bag buttons in the bag bar
+- Bags cannot be moved if they contain items or if moving into themselves
