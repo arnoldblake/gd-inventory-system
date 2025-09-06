@@ -1,6 +1,6 @@
 @tool
 extends Button
-signal swap_items(container: String, source_index: int, target_index: int)
+signal swap_items(source_container: String, destination_container: String, source_index: int, target_index: int)
 
 var parent_container: String = ""
 
@@ -15,6 +15,7 @@ func _get_drag_data (_position: Vector2) -> Dictionary:
 
 	var drag_data = {}
 	drag_data["source_index"] = get_index()
+	drag_data["parent_container"] = parent_container
 	return drag_data
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
@@ -23,6 +24,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if data.has("source_index"):
 		var source_index = data["source_index"]
+		var source_container = data["parent_container"]
 		var target_index = get_index()
 		if source_index != target_index:
-			emit_signal("swap_items", parent_container, source_index, target_index)
+			emit_signal("swap_items", source_container, parent_container, source_index, target_index)

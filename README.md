@@ -21,6 +21,7 @@ Open the project in Godot 4.4 and run the scene. The inventory comes pre-populat
 - Uses UniqueNode references (%BagGrid, %ContainerGrid) for reliable scene access 
 
 ## ToDo
-- Create scenes for button, and grid container nodes for easier and simpler node creation.
-- Rework bag bar from Bag node, disabiling visibility for the title bar (HBoxContainer) is effectively the same layout.
+- Create scenes for button for easier and simpler node creation.
+- Support for multiple bags
+- Drag and Drop between bags and from BagBar to inventory
 - Implement right click on items

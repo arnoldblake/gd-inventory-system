@@ -5,8 +5,7 @@
 [ext_resource type="Resource" uid="uid://dn5npv7ssmal" path="res://addons/inventory_system/Items/bag.tres" id="3_nednh"]
 [ext_resource type="Resource" uid="uid://cxdbpirgnupi2" path="res://addons/inventory_system/Items/red_pill.tres" id="4_5fx2v"]
 [ext_resource type="Resource" uid="uid://bpg3rao4twg3" path="res://addons/inventory_system/Items/blue_pill.tres" id="5_miskq"]
-
-[sub_resource type="Theme" id="Theme_3ghou"]
+[ext_resource type="PackedScene" uid="uid://chbu1ancw62gj" path="res://addons/inventory_system/Inventory/InventoryContainer.tscn" id="6_qw7jk"]
 
 [node name="Inventory" type="MarginContainer"]
 anchors_preset = 15
@@ -20,24 +19,7 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 script = ExtResource("1_3n7vm")
 starter_items = Array[ExtResource("2_orgsn")]([ExtResource("3_nednh"), ExtResource("4_5fx2v"), ExtResource("5_miskq")])
-
-[node name="BagBar" type="PanelContainer" parent="."]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="BagBar"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="BagGrid" type="GridContainer" parent="BagBar/MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme = SubResource("Theme_3ghou")
-columns = 5
+inventory_container_scene = ExtResource("6_qw7jk")
 
 [node name="BagGrid" type="GridContainer" parent="."]
 layout_mode = 2
@@ -45,34 +27,5 @@ size_flags_horizontal = 0
 size_flags_vertical = 8
 columns = 2
 
-[node name="Bag" type="PanelContainer" parent="BagGrid"]
+[node name="InventoryContainer" parent="BagGrid" instance=ExtResource("6_qw7jk")]
 layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="BagGrid/Bag"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="VBoxContainer" type="VBoxContainer" parent="BagGrid/Bag/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="HBoxContainer" type="HBoxContainer" parent="BagGrid/Bag/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="BagGrid/Bag/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Inventory"
-
-[node name="CloseButton" type="Button" parent="BagGrid/Bag/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(35, 35)
-layout_mode = 2
-size_flags_horizontal = 10
-text = "X"
-
-[node name="ContainerGrid" type="GridContainer" parent="BagGrid/Bag/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-columns = 3
