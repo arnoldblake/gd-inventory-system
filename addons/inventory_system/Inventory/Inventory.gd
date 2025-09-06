@@ -36,14 +36,6 @@ func _ready() -> void:
 					inventory_items[i].resize(item.container_size)
 					break
 
-	for item in starter_items:
-		if item.item_type == Item.ItemType.ITEM:
-			for i in inventory_items:
-				if i != null:
-					for j in i.size():
-						if i[j] == null:
-							i[j] = item.duplicate()
-							break
 
 	var bag_grid = bag_bar.get_node("%GridContainer") as GridContainer
 	bag_grid.columns = BAG_SLOTS
@@ -57,21 +49,33 @@ func _ready() -> void:
 		button.pressed.connect(_on_button_pressed.bind(button.get_index()))
 		button.connect("swap_items", _on_swap_items)
 
-	var inventory_container: PanelContainer = inventory_container_scene.instantiate()
-	get_node("GridContainer").add_child(inventory_container)
-	var grid_container = inventory_container.get_node("%GridContainer") as GridContainer
-	for n in equipped_bags.size():
-		if equipped_bags[n] != null && equipped_bags[n].container_size > 0:
-			for i in equipped_bags[n].container_size:
+	for bag in equipped_bags:
+		if bag != null:
+			var inventory_container: PanelContainer = inventory_container_scene.instantiate()
+			get_node("GridContainer").add_child(inventory_container)
+			var grid_container = inventory_container.get_node("%GridContainer") as GridContainer
+			for j in bag.container_size:
 				var button = create_button() 
 				button.parent_container = "ContainerGrid" 
+
+				var n = equipped_bags.find(bag)
 				button.container_index = n
+
 				grid_container.add_child(button)
 				button.pressed.connect(_on_button_pressed.bind(button.get_index()))
 				button.connect("swap_items", _on_swap_items)
-				
-				if inventory_items[n][i] != null:
-					button.icon = inventory_items[n][i].item_icon
+
+	for item in starter_items:
+		if item.item_type == Item.ItemType.ITEM:
+			for x in inventory_items.size():
+				if inventory_items[x] != null:
+					for y in inventory_items[x].size():
+						if inventory_items[x][y] == null:
+							inventory_items[x][y] = item.duplicate()
+							get_node("GridContainer").get_child(x).get_node("%GridContainer").get_child(y).icon = inventory_items[x][y].item_icon
+							break
+					break
+			
 
 func _on_button_pressed(index: int) -> void:
 	print("Button Pressed at index: %d" % index)
@@ -91,3 +95,5 @@ func _on_swap_items(source_container: String, destination_container: String, sou
 				inventory_items[source_container_index].set(source_index, null)
 				get_node("GridContainer").get_child(target_container_index).get_node("%GridContainer").get_child(target_index).icon = inventory_items[target_container_index][target_index].item_icon
 				get_node("GridContainer").get_child(source_container_index).get_node("%GridContainer").get_child(source_index).icon = null
+			else:
+				print("Failed to move item, target is not empty")
