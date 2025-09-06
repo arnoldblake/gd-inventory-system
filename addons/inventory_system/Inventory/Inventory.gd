@@ -1,8 +1,7 @@
 @tool
 extends MarginContainer
 
-const BAG_SLOTS = 5
-
+@export var bag_slots: int = 5
 @export var starter_items: Array[Item]
 @export var inventory_container_scene: PackedScene
 @onready var equipped_bags: Array[Item] = []
@@ -38,9 +37,9 @@ func _ready() -> void:
 
 
 	var bag_grid = bag_bar.get_node("%GridContainer") as GridContainer
-	bag_grid.columns = BAG_SLOTS
+	bag_grid.columns = bag_slots
 	bag_bar.get_node("MarginContainer/VBoxContainer/HBoxContainer").hide()
-	for n in BAG_SLOTS:
+	for n in bag_slots:
 		var button = create_button() 
 		if equipped_bags[n] != null && equipped_bags.size() > n:
 			button.icon = equipped_bags[n].item_icon
@@ -49,18 +48,22 @@ func _ready() -> void:
 		button.pressed.connect(_on_button_pressed.bind(button.get_index()))
 		button.connect("swap_items", _on_swap_items)
 
-	for bag in equipped_bags:
-		if bag != null:
-			var inventory_container: PanelContainer = inventory_container_scene.instantiate()
-			get_node("GridContainer").add_child(inventory_container)
+	# Instance the inventory containers and add to scene
+	for i in bag_slots:
+		var inventory_container: PanelContainer = inventory_container_scene.instantiate()
+		get_node("GridContainer").add_child(inventory_container)
+		inventory_container.hide()
+
+	# If a bag is equipped, populate the inventory grid with buttons
+	for i in equipped_bags.size():
+		if equipped_bags[i] != null:
+			var inventory_container = get_node("GridContainer").get_child(i)
+			inventory_container.show()
 			var grid_container = inventory_container.get_node("%GridContainer") as GridContainer
-			for j in bag.container_size:
+			for j in equipped_bags[i].container_size:
 				var button = create_button() 
 				button.parent_container = "ContainerGrid" 
-
-				var n = equipped_bags.find(bag)
-				button.container_index = n
-
+				button.container_index = i 
 				grid_container.add_child(button)
 				button.pressed.connect(_on_button_pressed.bind(button.get_index()))
 				button.connect("swap_items", _on_swap_items)
@@ -82,7 +85,10 @@ func _on_button_pressed(index: int) -> void:
 
 func _on_swap_items(source_container: String, destination_container: String, source_container_index: int, source_index: int, target_container_index: int, target_index: int) -> void:
 	print("Swap items in %s from %d:%d to %d:%d" % [source_container, source_container_index, source_index, target_container_index, target_index])
-	if source_container == destination_container: # Same container movement
+
+	if inventory_items[source_container_index][source_index] == null:
+		print("No item to move")
+	elif source_container == destination_container: # Same container movement
 		if source_container == "BagBar":
 			if equipped_bags[target_index] == null: # Target is empty, move the item
 				equipped_bags.set(target_index, equipped_bags[source_index])
