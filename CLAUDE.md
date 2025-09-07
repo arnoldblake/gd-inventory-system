@@ -18,6 +18,7 @@ This is structured as a Godot addon located in `addons/inventory_system/`:
 - `Item` (addons/inventory_system/Items/item.gd): Resource class with ItemType enum (ITEM, BAG, KEY, QUEST) and properties: item_name, item_icon, item_description, item_type, container_size, is_stackable, max_stack_size
 - `Inventory` (addons/inventory_system/Inventory/Inventory.gd): MarginContainer with @tool directive that procedurally generates UI from equipped_bags and inventory_items arrays
 - `Button` (addons/inventory_system/Inventory/Button.gd): Custom Button with drag-and-drop functionality, emits swap_items signal
+- `ItemGridContainer` (addons/inventory_system/Inventory/item_grid_container.gd): GridContainer class with ContainerType enum (NONE, ACTION_BAR, BAG_BAR, INVENTORY)
 
 ### Key Design Patterns
 - Items are Godot Resources (.tres files) that can be duplicated and modified at runtime
@@ -76,3 +77,15 @@ Key UniqueNode names for reliable script access:
 - Supports movement between bag slots, from bags to containers, and container to bag (bags only)
 - Container visibility is toggled by clicking bag buttons in the bag bar
 - Bags cannot be moved if they contain items or if moving into themselves
+- Dynamic button instantiation ensures proper UI updates when bags are moved between slots
+- Container buttons are automatically created/cleared based on bag container_size when bags are equipped/unequipped
+
+## Current Features (v1.0)
+- Drag-and-drop inventory management with visual feedback
+- 5-slot bag bar for equipping container items (bags)
+- Dynamic inventory containers based on equipped bags
+- Item validation (only bags can go in bag bar, bags can't move if they contain items)
+- Container visibility toggling by clicking bag icons
+- Automatic button instantiation when moving bags between slots
+- Support for different item types (ITEM, BAG, KEY, QUEST)
+- Starter items configuration for initial inventory setup

@@ -1,6 +1,8 @@
-[gd_scene format=3 uid="uid://chbu1ancw62gj"]
+[gd_scene load_steps=2 format=3 uid="uid://chbu1ancw62gj"]
 
-[node name="InventoryContainer" type="PanelContainer"]
+[ext_resource type="Script" uid="uid://bnybyf4irn3on" path="res://addons/inventory_system/Inventory/item_grid_container.gd" id="1_6o1s6"]
+
+[node name="PanelContainer" type="PanelContainer"]
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -31,3 +33,5 @@ text = "X"
 unique_name_in_owner = true
 layout_mode = 2
 columns = 3
+script = ExtResource("1_6o1s6")
+metadata/_custom_type_script = "uid://bnybyf4irn3on"
