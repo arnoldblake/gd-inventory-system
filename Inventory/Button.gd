@@ -32,5 +32,5 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 
 		var target_container_type = get_parent().container_type 
 		var target_container_index = container_index
-		var target_index = get_index()
+		var target_index = index 
 		emit_signal("swap_items", source_container_type, target_container_type, source_container_index, source_index, target_container_index, target_index)
