@@ -10,7 +10,7 @@ extends MarginContainer
 
 func create_button() -> Button:
 	var button = Button.new()
-	button.set_script(preload("res://addons/inventory_system/Inventory/Button.gd"))
+	button.set_script(preload("res://addons/gd-inventory-system/Inventory/Button.gd"))
 	button.expand_icon = true
 	button.custom_minimum_size = Vector2(64,64)
 	button.size = Vector2(64,64)
