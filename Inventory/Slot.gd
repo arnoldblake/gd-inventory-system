@@ -37,3 +37,6 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		var target_container_index = get_parent().owner.get_index()
 		var target_index = get_index()
 		emit_signal("swap_items", source_container_type, target_container_type, source_container_index, source_index, target_container_index, target_index)
+
+func _is_empty() -> bool:
+	return false if contents else true

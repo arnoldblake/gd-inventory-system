@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://chbu1ancw62gj"]
 
-[ext_resource type="Script" uid="uid://bnybyf4irn3on" path="res://addons/gd-inventory-system/Inventory/item_grid_container.gd" id="1_6o1s6"]
+[ext_resource type="Script" uid="uid://bnybyf4irn3on" path="res://addons/gd-inventory-system/Inventory/InventoryUI.gd" id="1_6o1s6"]
 
 [node name="PanelContainer" type="PanelContainer"]
 

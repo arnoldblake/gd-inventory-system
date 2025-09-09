@@ -3,7 +3,7 @@ extends MarginContainer
 
 @export var bag_slot_quantity: int = 5
 @export var starter_items: Array[Item]
-@export var container_scene: PackedScene = preload("res://addons/gd-inventory-system/Inventory/InventoryContainer.tscn")
+@export var inventory_ui: PackedScene = preload("res://addons/gd-inventory-system/Inventory/InventoryUI.tscn")
 @onready var equipped_bags: Array[Array] = []
 @onready var inventory_items: Array[Array] = []
 
@@ -38,7 +38,7 @@ func _ready() -> void:
 	equipped_bags[0] = []
 	equipped_bags[0].resize(bag_slot_quantity)
 	inventory_items.resize(bag_slot_quantity)
-	var container: PanelContainer = container_scene.instantiate()
+	var container: PanelContainer = inventory_ui.instantiate()
 	container.get_node("%GridContainer").container_type = ItemGridContainer.ContainerType.BAG_BAR
 	container.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	container.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
@@ -66,7 +66,7 @@ func _ready() -> void:
 
 	# Instance the inventory containers and add to scene
 	for i in bag_slot_quantity:
-		container = container_scene.instantiate()
+		container = inventory_ui.instantiate()
 		get_node("GridContainer").add_child(container)
 		container.get_node("%GridContainer").container_type = ItemGridContainer.ContainerType.INVENTORY
 		container.hide()
