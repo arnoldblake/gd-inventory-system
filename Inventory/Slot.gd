@@ -1,9 +1,7 @@
 @tool
-extends Button
+class_name Slot extends Button
 
 signal swap_items(source_container_type: ItemGridContainer.ContainerType, target_container_type: ItemGridContainer.ContainerType, source_container_index: int, source_index: int, target_container_index: int, target_index: int)
-
-var container_index: int = -1
 
 var contents: Item: 
 	get:
@@ -21,7 +19,7 @@ func _get_drag_data (_position: Vector2) -> Dictionary:
 	set_drag_preview(preview)
 
 	var drag_data = {}
-	drag_data["source_container_index"] = container_index
+	drag_data["source_container_index"] = get_parent().owner.get_index()
 	drag_data["source_index"] = get_index()
 	drag_data["source_container_type"] = get_parent().container_type
 	return drag_data
@@ -35,7 +33,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		var source_container_index = data["source_container_index"]
 		var source_index = data["source_index"]
 
-		var target_container_type = get_parent().container_type 
-		var target_container_index = container_index
-		var target_index = get_index() 
+		var target_container_type = get_parent().container_type
+		var target_container_index = get_parent().owner.get_index()
+		var target_index = get_index()
 		emit_signal("swap_items", source_container_type, target_container_type, source_container_index, source_index, target_container_index, target_index)

@@ -1,4 +1,4 @@
-class_name Item extends Resource
+class_name Item extends Slottable
 
 enum ItemType {
     ITEM,
@@ -7,7 +7,6 @@ enum ItemType {
     QUEST
 }
 
-@export var item_name: String = "New Item"
 @export var item_icon: Texture2D
 @export var item_description: String = "Item Description"
 @export var item_type: ItemType = ItemType.ITEM

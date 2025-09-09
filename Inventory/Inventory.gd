@@ -8,18 +8,19 @@ extends MarginContainer
 @onready var inventory_items: Array[Array] = []
 
 
-func create_button() -> Button:
-	var button = Button.new()
-	button.set_script(preload("res://addons/gd-inventory-system/Inventory/Button.gd"))
+func create_button() -> Slot:
+	var button = Slot.new()
+	button.set_script(preload("res://addons/gd-inventory-system/Inventory/Slot.gd"))
 	button.expand_icon = true
 	button.custom_minimum_size = Vector2(64,64)
 	button.size = Vector2(64,64)
 	button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	button.button_mask = MOUSE_BUTTON_MASK_LEFT | MOUSE_BUTTON_MASK_RIGHT
 	return button
 
 func get_item_at(container_type: ItemGridContainer.ContainerType, container_index: int, slot_index: int) -> Item:
 	if container_type == ItemGridContainer.ContainerType.BAG_BAR:
-		return equipped_bags[container_index][slot_index]
+		return equipped_bags[0][slot_index]
 	else:
 		return inventory_items[container_index][slot_index]
 
@@ -60,8 +61,7 @@ func _ready() -> void:
 		if equipped_bags[0][n] != null && equipped_bags[0].size() > n:
 			button.icon = equipped_bags[0][n].item_icon
 		bag_grid.add_child(button)
-		button.container_index = 0
-		button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.BAG_BAR, button.container_index, button.get_index()))
+		button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.BAG_BAR, bag_grid.owner.get_index(), button.get_index()))
 		button.connect("swap_items", _on_swap_items)
 
 	# Instance the inventory containers and add to scene
@@ -82,8 +82,7 @@ func _ready() -> void:
 			for j in equipped_bags[0][i].container_size:
 				var button = create_button() 
 				grid_container.add_child(button)
-				button.container_index = inventory_container.get_index()
-				button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.INVENTORY, button.container_index, button.get_index()))
+				button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.INVENTORY, grid_container.owner.get_index(), button.get_index()))
 				button.connect("swap_items", _on_swap_items)
 
 	for item in starter_items:
@@ -149,8 +148,7 @@ func _instantiate_container_buttons(container_index: int, bag_item: Item) -> voi
 	for j in bag_item.container_size:
 		var button = create_button()
 		grid_container.add_child(button)
-		button.container_index = container_index
-		button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.INVENTORY, button.container_index, button.get_index()))
+		button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.INVENTORY, grid_container.owner.get_index(), button.get_index()))
 		button.connect("swap_items", _on_swap_items)
 
 func _handle_bag_container_visibility(source_index: int, target_index: int) -> void:
