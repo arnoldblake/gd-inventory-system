@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://e10g0gqdh144"]
+[gd_scene load_steps=6 format=3 uid="uid://e10g0gqdh144"]
 
 [ext_resource type="Script" uid="uid://dty8qg2mos4et" path="res://addons/gd-inventory-system/Inventory/Inventory.gd" id="1_3n7vm"]
 [ext_resource type="Script" uid="uid://cr26drai2nvto" path="res://addons/gd-inventory-system/Items/item.gd" id="2_orgsn"]
 [ext_resource type="Resource" uid="uid://dn5npv7ssmal" path="res://addons/gd-inventory-system/Items/bag.tres" id="3_nednh"]
 [ext_resource type="Resource" uid="uid://cxdbpirgnupi2" path="res://addons/gd-inventory-system/Items/red_pill.tres" id="4_5fx2v"]
 [ext_resource type="Resource" uid="uid://bpg3rao4twg3" path="res://addons/gd-inventory-system/Items/blue_pill.tres" id="5_miskq"]
-[ext_resource type="PackedScene" uid="uid://chbu1ancw62gj" path="res://addons/gd-inventory-system/Inventory/InventoryContainer.tscn" id="6_qw7jk"]
 
 [node name="Inventory" type="MarginContainer"]
 anchors_preset = 15
@@ -19,7 +18,6 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 script = ExtResource("1_3n7vm")
 starter_items = Array[ExtResource("2_orgsn")]([ExtResource("3_nednh"), ExtResource("4_5fx2v"), ExtResource("5_miskq"), ExtResource("3_nednh")])
-container_scene = ExtResource("6_qw7jk")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 2

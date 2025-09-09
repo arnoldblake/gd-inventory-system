@@ -3,7 +3,7 @@ extends MarginContainer
 
 @export var bag_slot_quantity: int = 5
 @export var starter_items: Array[Item]
-@export var container_scene: PackedScene
+@export var container_scene: PackedScene = preload("res://addons/gd-inventory-system/Inventory/InventoryContainer.tscn")
 @onready var equipped_bags: Array[Array] = []
 @onready var inventory_items: Array[Array] = []
 
@@ -61,8 +61,7 @@ func _ready() -> void:
 			button.icon = equipped_bags[0][n].item_icon
 		bag_grid.add_child(button)
 		button.container_index = 0
-		button.index = button.get_index()
-		button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.BAG_BAR, button.container_index, button.index))
+		button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.BAG_BAR, button.container_index, button.get_index()))
 		button.connect("swap_items", _on_swap_items)
 
 	# Instance the inventory containers and add to scene
@@ -84,8 +83,7 @@ func _ready() -> void:
 				var button = create_button() 
 				grid_container.add_child(button)
 				button.container_index = inventory_container.get_index()
-				button.index = button.get_index()
-				button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.INVENTORY, button.container_index, button.index))
+				button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.INVENTORY, button.container_index, button.get_index()))
 				button.connect("swap_items", _on_swap_items)
 
 	for item in starter_items:
