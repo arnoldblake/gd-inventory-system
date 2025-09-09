@@ -1,13 +1,15 @@
 [gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://cxdbpirgnupi2"]
 
+[ext_resource type="Texture2D" uid="uid://biy6j3dh86e75" path="res://addons/gd-inventory-system/Assets/kenney_generic-items/PNG/Colored/genericItem_color_089.png" id="1_hwb1a"]
 [ext_resource type="Script" uid="uid://cr26drai2nvto" path="res://addons/gd-inventory-system/Items/item.gd" id="1_lyi7a"]
-[ext_resource type="Texture2D" uid="uid://drhof8geg05gl" path="res://addons/gd-inventory-system/Assets/kenney_generic-items/PNG/Colored/genericItem_color_089.png" id="1_o3dgj"]
 
 [resource]
 script = ExtResource("1_lyi7a")
 item_name = "Red Pill"
-item_icon = ExtResource("1_o3dgj")
+item_icon = ExtResource("1_hwb1a")
 item_description = "A red pill"
 item_type = 0
 container_size = 0
+is_stackable = false
+max_stack_size = 5
 metadata/_custom_type_script = "uid://cr26drai2nvto"

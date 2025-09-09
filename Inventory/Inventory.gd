@@ -150,8 +150,7 @@ func _instantiate_container_buttons(container_index: int, bag_item: Item) -> voi
 		var button = create_button()
 		grid_container.add_child(button)
 		button.container_index = container_index
-		button.index = j
-		button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.INVENTORY, button.container_index, button.index))
+		button.pressed.connect(_on_button_pressed.bind(ItemGridContainer.ContainerType.INVENTORY, button.container_index, button.get_index()))
 		button.connect("swap_items", _on_swap_items)
 
 func _handle_bag_container_visibility(source_index: int, target_index: int) -> void:

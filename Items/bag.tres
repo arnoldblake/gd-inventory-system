@@ -1,14 +1,12 @@
 [gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://dn5npv7ssmal"]
 
+[ext_resource type="Texture2D" uid="uid://drsm4pqhj38fo" path="res://addons/gd-inventory-system/Assets/kenney_generic-items/PNG/Colored/genericItem_color_144.png" id="1_2emef"]
 [ext_resource type="Script" uid="uid://cr26drai2nvto" path="res://addons/gd-inventory-system/Items/item.gd" id="1_ojchy"]
-
-[sub_resource type="Resource" id="Resource_moefw"]
-metadata/__load_path__ = "res://addons/gd-inventory-system/Assets/kenney_generic-items/PNG/Colored/genericItem_color_144.png"
 
 [resource]
 script = ExtResource("1_ojchy")
 item_name = "Bag"
-item_icon = SubResource("Resource_moefw")
+item_icon = ExtResource("1_2emef")
 item_description = "A Bag"
 item_type = 1
 container_size = 8
