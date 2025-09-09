@@ -1,4 +1,4 @@
-class_name ItemGridContainer extends GridContainer
+extends PanelContainer
 
 enum ContainerType {
     NONE,

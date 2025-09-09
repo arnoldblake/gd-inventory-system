@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bnybyf4irn3on" path="res://addons/gd-inventory-system/Inventory/InventoryUI.gd" id="1_6o1s6"]
 
-[node name="PanelContainer" type="PanelContainer"]
+[node name="InventoryUI" type="PanelContainer"]
+offset_right = 130.0
+offset_bottom = 63.0
+script = ExtResource("1_6o1s6")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -33,6 +36,3 @@ text = "X"
 unique_name_in_owner = true
 layout_mode = 2
 columns = 3
-script = ExtResource("1_6o1s6")
-container_type = 3
-metadata/_custom_type_script = "uid://bnybyf4irn3on"
