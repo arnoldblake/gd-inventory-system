@@ -47,12 +47,12 @@ func _is_empty() -> bool:
 	return false if contents else true
 
 func _can_combine(data: Variant) -> bool:
-	if contents.id == data.contents.id and contents.is_stackable and contents.quantity + data.contents.quantity <= contents.max_stack_size:
+	if contents.id == data.contents.id and contents.is_stackable and contents.quantity + data.contents.quantity <= contents.max_stack_size && contents != data.contents:
 		return true
 	return false
 
 func _do_combine(data: Variant) -> void:
-	if contents.quantity + data.contents.quantity <= contents.max_stack_size:
+	if contents.quantity + data.contents.quantity <= contents.max_stack_size && contents != data.contents:
 		contents.quantity += data.contents.quantity
 		data.contents = null
 		contents = contents
