@@ -16,13 +16,13 @@ A minimal, opinionated GDScript inventory system addon for Godot 4.4 with drag-a
 
 ## Installation
 
-1. Copy the `addons/inventory_system/` directory to your project's `addons/` folder
+1. Copy the `addons/gd-inventory-system/` directory to your project's `addons/` folder
 2. Enable the plugin in Project Settings → Plugins → "Inventory System"
 
 ## Usage
 
 To add an inventory to your scene:
-1. Instance the `Inventory.tscn` scene from `addons/inventory_system/Inventory/Inventory.tscn`
+1. Instance the `Inventory.tscn` scene from `addons/gd-inventory-system/Inventory/Inventory.tscn`
 2. Configure the `starter_items` array in the inspector to define initial inventory items
 3. The inventory will automatically generate UI for bag slots and container grids based on equipped bags
 
@@ -37,14 +37,14 @@ To add an inventory to your scene:
 ### Core Components
 - **Item Resource**: Godot Resources with configurable properties (name, icon, description, type, container_size, stackable)
 - **Inventory Scene**: Main MarginContainer that procedurally generates UI from equipped bags and inventory items  
-- **Button Component**: Custom drag-and-drop buttons with swap_items signal for item movement
-- **ItemGridContainer**: GridContainer with ContainerType enum for different container types
-- **Container System**: Dynamic inventory containers that appear when bags are equipped with automatic button management
+- **Slot Component**: Custom drag-and-drop slots with item management functionality
+- **InventoryUI**: User interface controller for inventory interactions
+- **Container System**: Dynamic inventory containers that appear when bags are equipped with automatic slot management
 
 ### File Structure
-- `addons/inventory_system/Items/`: Item definitions (.gd script and .tres resources)
-- `addons/inventory_system/Inventory/`: Main inventory scenes (Inventory.tscn, InventoryContainer.tscn)
-- `addons/inventory_system/Assets/`: Art assets (kenney asset packs)
+- `addons/gd-inventory-system/Items/`: Item definitions (.gd script and .tres resources)
+- `addons/gd-inventory-system/Inventory/`: Main inventory scenes (Inventory.tscn, InventoryUI.tscn, Slot.tscn)
+- `addons/gd-inventory-system/Assets/`: Art assets (kenney asset packs)
 
 ## Item Movement Rules
 

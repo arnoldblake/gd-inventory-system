@@ -9,16 +9,16 @@ This is a Godot 4.4 inventory system implemented as an addon plugin. The project
 ## Architecture
 
 ### Plugin Structure
-This is structured as a Godot addon located in `addons/inventory_system/`:
-- `plugin.cfg`: Defines the plugin metadata (name: "Inventory System", author: "Blake Arnold")
+This is structured as a Godot addon located in `addons/gd-inventory-system/`:
+- `plugin.cfg`: Defines the plugin metadata (name: "GD Inventory System", author: "Blake Arnold")
 - `inventory_system.gd`: Main plugin script extending EditorPlugin (currently minimal)
 - The plugin is enabled in `project.godot` under `[editor_plugins]`
 
 ### Core Classes
-- `Item` (addons/inventory_system/Items/item.gd): Resource class with ItemType enum (ITEM, BAG, KEY, QUEST) and properties: item_name, item_icon, item_description, item_type, container_size, is_stackable, max_stack_size
-- `Inventory` (addons/inventory_system/Inventory/Inventory.gd): MarginContainer with @tool directive that procedurally generates UI from equipped_bags and inventory_items arrays
-- `Button` (addons/inventory_system/Inventory/Button.gd): Custom Button with drag-and-drop functionality, emits swap_items signal
-- `ItemGridContainer` (addons/inventory_system/Inventory/item_grid_container.gd): GridContainer class with ContainerType enum (NONE, ACTION_BAR, BAG_BAR, INVENTORY)
+- `Item` (addons/gd-inventory-system/Items/item.gd): Resource class with ItemType enum (ITEM, BAG, KEY, QUEST) and properties: item_name, item_icon, item_description, item_type, container_size, is_stackable, max_stack_size
+- `Inventory` (addons/gd-inventory-system/Inventory/Inventory.gd): MarginContainer with @tool directive that procedurally generates UI from equipped_bags and inventory_items arrays
+- `Button` (addons/gd-inventory-system/Inventory/Button.gd): Custom Button with drag-and-drop functionality, emits swap_items signal
+- `ItemGridContainer` (addons/gd-inventory-system/Inventory/item_grid_container.gd): GridContainer class with ContainerType enum (NONE, ACTION_BAR, BAG_BAR, INVENTORY)
 
 ### Key Design Patterns
 - Items are Godot Resources (.tres files) that can be duplicated and modified at runtime
@@ -46,7 +46,7 @@ The project includes VS Code launch configuration for debugging:
 - Debug options available: collisions, paths, navigation (currently disabled)
 
 ### File Structure
-- `addons/inventory_system/`: Main addon directory
+- `addons/gd-inventory-system/`: Main addon directory
   - `Items/`: Contains item definitions (.gd script and .tres resources)
   - `Inventory/`: Contains inventory system code and scenes (Inventory.tscn, InventoryContainer.tscn)
   - `Assets/`: Art assets organized by source (kenney asset packs)
