@@ -13,3 +13,4 @@ enum ItemType {
 @export var container_size: int = 0
 @export var is_stackable: bool = false
 @export var max_stack_size: int = 5
+@export var quantity: int = 1

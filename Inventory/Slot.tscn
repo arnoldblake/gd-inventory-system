@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2of5s7dqpqpj"]
+
+[ext_resource type="Script" uid="uid://dbwwo0nryquw5" path="res://addons/gd-inventory-system/Inventory/Slot.gd" id="1_5gtb6"]
+
+[node name="Slot" type="Button"]
+custom_minimum_size = Vector2(64, 64)
+button_mask = 3
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_5gtb6")
+metadata/_custom_type_script = "uid://dbwwo0nryquw5"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -28.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 4
+
+[node name="Label" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 2

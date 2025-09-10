@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://e10g0gqdh144"]
 
 [ext_resource type="Script" uid="uid://dty8qg2mos4et" path="res://addons/gd-inventory-system/Inventory/Inventory.gd" id="1_3n7vm"]
-[ext_resource type="Script" uid="uid://cr26drai2nvto" path="res://addons/gd-inventory-system/Items/item.gd" id="2_orgsn"]
-[ext_resource type="Resource" uid="uid://dn5npv7ssmal" path="res://addons/gd-inventory-system/Items/bag.tres" id="3_nednh"]
-[ext_resource type="Resource" uid="uid://cxdbpirgnupi2" path="res://addons/gd-inventory-system/Items/red_pill.tres" id="4_5fx2v"]
-[ext_resource type="Resource" uid="uid://bpg3rao4twg3" path="res://addons/gd-inventory-system/Items/blue_pill.tres" id="5_miskq"]
+[ext_resource type="Script" uid="uid://cr26drai2nvto" path="res://addons/gd-inventory-system/Items/Item.gd" id="2_b5oi4"]
+[ext_resource type="Resource" uid="uid://dn5npv7ssmal" path="res://addons/gd-inventory-system/Items/bag.tres" id="3_a4e10"]
+[ext_resource type="Resource" uid="uid://cxdbpirgnupi2" path="res://addons/gd-inventory-system/Items/red_pill.tres" id="4_m86yo"]
+[ext_resource type="Resource" uid="uid://bpg3rao4twg3" path="res://addons/gd-inventory-system/Items/blue_pill.tres" id="5_k1ksy"]
 
 [node name="Inventory" type="MarginContainer"]
 anchors_preset = 15
@@ -17,7 +17,7 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 script = ExtResource("1_3n7vm")
-starter_items = Array[ExtResource("2_orgsn")]([ExtResource("3_nednh"), ExtResource("4_5fx2v"), ExtResource("5_miskq"), ExtResource("3_nednh")])
+starter_items = Array[ExtResource("2_b5oi4")]([ExtResource("3_a4e10"), ExtResource("4_m86yo"), ExtResource("5_k1ksy"), ExtResource("3_a4e10"), ExtResource("4_m86yo"), ExtResource("5_k1ksy"), ExtResource("4_m86yo")])
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 2
