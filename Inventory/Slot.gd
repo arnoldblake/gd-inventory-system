@@ -63,18 +63,20 @@ func _can_move(data: Variant) -> bool:
 	elif get_parent().owner.container_type == 2 && data.contents.item_type == Item.ItemType.BAG:
 		return true
 	elif get_parent().owner.container_type == 3 && data.contents.item_type == Item.ItemType.BAG:
+		if data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).free_space() != data.contents.container_size:
+			return false
+		if get_parent().owner.get_index() == data.get_index():
+			return false
 		return true
 	return false
 
 func _do_move(data: Variant) -> void:
-	if get_parent().owner.container_type == 3 && data.get_parent() && data.contents.item_type == Item.ItemType.BAG:
-		if data.get_parent().owner.container_type == 2:
-			var inventory_ui = data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index())
-			if inventory_ui.free_space() != data.contents.container_size:
+	if get_parent().owner.container_type == 3 && data.get_parent() && data.get_parent().owner.container_type == 2 && data.contents.item_type == Item.ItemType.BAG:
+			if data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).free_space() != data.contents.container_size:
 				return
-			if inventory_ui.get_index() == data.get_index():
+			if get_parent().owner.get_index() == data.get_index():
 				return
-			inventory_ui.hide()
+			data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).hide()
 
 	self.contents = data.contents	
 	data.contents = null
