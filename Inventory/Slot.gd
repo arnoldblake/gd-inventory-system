@@ -87,7 +87,7 @@ func _do_move(data: Variant) -> void:
 		inventory_ui.resize(contents.container_size)
 
 func _can_swap(data: Variant) -> bool:
-	if get_parent().owner.container_type == data.get_parent().owner.container_type:
+	if get_parent().owner.container_type == data.get_parent().owner.container_type && contents != data.contents:
 		return true
 	return false
 
@@ -95,4 +95,3 @@ func _do_swap(data: Variant) -> void:
 	var temp = self.contents
 	self.contents = data.contents
 	data.contents = temp
-	pass
