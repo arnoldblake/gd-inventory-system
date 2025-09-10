@@ -39,6 +39,9 @@ func resize(size: int) -> void:
 		if container_type == ContainerType.BAG_BAR:
 			var inventory = get_parent()
 			slot.pressed.connect(inventory._on_button_pressed.bind(slot))
+		else:
+			slot.pressed.connect(get_parent().owner._on_button_pressed.bind(slot))
+		
 func free_space() -> int:
 	var free_slots: int = 0
 	for slot in get_node("%GridContainer").get_children():

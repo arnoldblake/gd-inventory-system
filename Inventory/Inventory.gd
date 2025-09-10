@@ -4,7 +4,6 @@ extends MarginContainer
 @export var bag_slot_quantity: int = 5
 @export var starter_items: Array[Item]
 @export var inventory_ui: PackedScene = preload("res://addons/gd-inventory-system/Inventory/InventoryUI.tscn")
-@export var slot_ui: PackedScene = preload("res://addons/gd-inventory-system/Inventory/Slot.tscn")
 
 func _ready() -> void:
 	# Instance the bag bar and add to scene
