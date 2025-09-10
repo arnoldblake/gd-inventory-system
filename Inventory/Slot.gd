@@ -29,14 +29,14 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if data.contents:
 		if _is_empty() && _can_move(data): return true
 		elif !_is_empty() && _can_combine(data): return true
-		elif _can_swap(data): return true
+		elif !_is_empty() && _can_swap(data): return true
 	return false
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if data.contents:
 		if _is_empty() && _can_move(data): _do_move(data)
 		elif !_is_empty() && _can_combine(data): _do_combine(data)
-		elif _can_swap(data): _do_swap(data)
+		elif !_is_empty() && _can_swap(data): _do_swap(data)
 
 func do_update_ui() -> void:
 	if is_node_ready():
@@ -59,6 +59,9 @@ func _do_combine(data: Variant) -> void:
 
 func _can_move(data: Variant) -> bool:
 	if get_parent().owner.container_type == data.get_parent().owner.container_type:
+		if get_parent().owner.container_type == 2:
+			if data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).free_space() != data.contents.container_size:
+				return false
 		return true
 	elif get_parent().owner.container_type == 2 && data.contents.item_type == Item.ItemType.BAG:
 		return true
@@ -85,6 +88,11 @@ func _do_move(data: Variant) -> void:
 		var inventory_ui = get_parent().owner.get_parent().get_node("GridContainer").get_child(get_index()) # TODO: Change to signal
 		inventory_ui.visible = !inventory_ui.visible
 		inventory_ui.resize(contents.container_size)
+
+	if get_parent().owner.container_type == 2 && data.get_parent() && data.get_parent().owner.container_type == 2:
+		data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).hide()
+	# 	pass
+
 
 func _can_swap(data: Variant) -> bool:
 	if get_parent().owner.container_type == data.get_parent().owner.container_type && contents != data.contents:
