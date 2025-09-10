@@ -1,18 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://chbu1ancw62gj"]
+[gd_scene load_steps=5 format=3 uid="uid://chbu1ancw62gj"]
 
 [ext_resource type="Script" uid="uid://bnybyf4irn3on" path="res://addons/gd-inventory-system/Inventory/InventoryUI.gd" id="1_6o1s6"]
+[ext_resource type="Texture2D" uid="uid://b3xwto04mruyk" path="res://addons/gd-inventory-system/Assets/kenney_ui-pack-adventure/PNG/Default/button_red_close.png" id="2_0g0hx"]
+[ext_resource type="Theme" uid="uid://c6vv3odid4til" path="res://addons/gd-inventory-system/Theme.theme" id="2_rwpps"]
+[ext_resource type="Texture2D" uid="uid://d30py385bp73y" path="res://addons/gd-inventory-system/Assets/kenney_ui-pack-adventure/PNG/Default/panel_brown_damaged_dark.png" id="4_3sb0n"]
 
 [node name="InventoryUI" type="PanelContainer"]
-offset_right = 130.0
+offset_right = 200.0
 offset_bottom = 63.0
 script = ExtResource("1_6o1s6")
 
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("4_3sb0n")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -28,12 +39,14 @@ text = "Inventory"
 
 [node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 size_flags_horizontal = 10
-text = "X"
+theme = ExtResource("2_rwpps")
+icon = ExtResource("2_0g0hx")
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
 columns = 3
