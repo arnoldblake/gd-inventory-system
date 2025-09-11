@@ -2,6 +2,9 @@
 
 A minimal, opinionated GDScript inventory system addon for Godot 4.4 with drag-and-drop functionality, starter items, and container support.
 
+
+![Image](./docs/Screenshot2025-09-11081309.png)
+
 ## Features
 
 - **Plugin-based**: Structured as a Godot addon for easy integration into existing projects
