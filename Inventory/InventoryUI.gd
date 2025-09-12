@@ -1,5 +1,5 @@
 @tool
-extends PanelContainer
+class_name InventoryUI extends PanelContainer
 
 enum ContainerType {
 	NONE,
@@ -34,6 +34,10 @@ func resize(size: int) -> void:
 		child.queue_free()
 	for i in size:
 		var slot = slot_ui.instantiate() as Slot
+		if container_type == ContainerType.INVENTORY:
+			slot.set_script(preload("res://addons/gd-inventory-system/Inventory/InventorySlot.gd"))
+		elif container_type == ContainerType.BAG_BAR:
+			slot.set_script(preload("res://addons/gd-inventory-system/Inventory/BagSlot.gd"))
 		get_node("%GridContainer").add_child(slot)
 
 		if container_type == ContainerType.BAG_BAR:

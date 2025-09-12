@@ -59,13 +59,8 @@ func _do_combine(data: Variant) -> void:
 
 func _can_move(data: Variant) -> bool:
 	if get_parent().owner.container_type == data.get_parent().owner.container_type:
-		if get_parent().owner.container_type == 2:
-			if data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).free_space() != data.contents.container_size:
-				return false
 		return true
-	elif get_parent().owner.container_type == 2 && data.contents.item_type == Item.ItemType.BAG:
-		return true
-	elif get_parent().owner.container_type == 3 && data.contents.item_type == Item.ItemType.BAG:
+	elif get_parent().owner.container_type == 3 && data.contents.item_type == Item.ItemType.BAG: # Move to inventory from bag?
 		if data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).free_space() != data.contents.container_size:
 			return false
 		if get_parent().owner.get_index() == data.get_index():
@@ -75,24 +70,12 @@ func _can_move(data: Variant) -> bool:
 
 func _do_move(data: Variant) -> void:
 	if get_parent().owner.container_type == 3 && data.get_parent() && data.get_parent().owner.container_type == 2 && data.contents.item_type == Item.ItemType.BAG:
-			if data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).free_space() != data.contents.container_size:
-				return
 			if get_parent().owner.get_index() == data.get_index():
 				return
 			data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).hide()
 
 	self.contents = data.contents	
 	data.contents = null
-
-	if get_parent().owner.container_type == 2 && contents.item_type == Item.ItemType.BAG:
-		var inventory_ui = get_parent().owner.get_parent().get_node("GridContainer").get_child(get_index()) # TODO: Change to signal
-		inventory_ui.visible = !inventory_ui.visible
-		inventory_ui.resize(contents.container_size)
-
-	if get_parent().owner.container_type == 2 && data.get_parent() && data.get_parent().owner.container_type == 2:
-		data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index()).hide()
-	# 	pass
-
 
 func _can_swap(data: Variant) -> bool:
 	if get_parent().owner.container_type == data.get_parent().owner.container_type && contents != data.contents:
