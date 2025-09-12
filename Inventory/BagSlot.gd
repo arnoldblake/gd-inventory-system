@@ -12,8 +12,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	return false
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
-	if data.contents:
-		if _is_empty() && _can_move(data): _do_move(data)
+	if _is_empty() && _can_move(data): _do_move(data)
 
 func _can_move(data: Variant) -> bool:
 	var source_container = data.get_parent().owner
