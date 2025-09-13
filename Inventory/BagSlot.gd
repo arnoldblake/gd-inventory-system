@@ -1,6 +1,7 @@
 # The BagSlot is a specialized Slot that only accepts Bag items.
 # The only supported bag slot operations are move either from an inventory or to another bag slot
 
+@tool
 class_name BagSlot extends Slot
 
 func _ready() -> void:
@@ -25,10 +26,13 @@ func _can_move(data: Variant) -> bool:
 	return false
 
 func _do_move(data: Variant) -> void:
+	if data.get_parent() && data.get_parent().owner.container_type == 2:
+		var source_inventory_container = data.get_parent().owner.get_parent().get_node("GridContainer").get_child(data.get_index())
+		source_inventory_container.hide()
+
 	super._do_move(data)
 
-	var source_inventory_container = get_parent().owner.get_parent().get_node("GridContainer").get_child(get_index()) # TODO: Change to signal
-	source_inventory_container.visible = !source_inventory_container.visible
-	source_inventory_container.resize(contents.container_size)
-	source_inventory_container.hide()
+	var inventory_container = get_parent().owner.get_parent().get_node("GridContainer").get_child(get_index())
+	inventory_container.resize(contents.container_size)
+	inventory_container.show()
 	
