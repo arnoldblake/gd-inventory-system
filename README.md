@@ -10,7 +10,7 @@ A minimal, opinionated inventory system for Godot 4.4+ with drag-and-drop functi
 - **Drag-and-drop interface** with visual feedback
 - **Resource-based items** (.tres files) supporting ITEM, BAG, KEY, QUEST types
 - **Container system** - bags provide additional inventory slots
-- **Dynamic UI generation** - containers show/hide based on equipped bags
+- **Dynamic UI** - containers show/hide based on equipped bags
 - **Item stacking** with configurable stack sizes
 - **Movement validation** - prevents invalid item placements
 
@@ -25,7 +25,7 @@ A minimal, opinionated inventory system for Godot 4.4+ with drag-and-drop functi
 
 - **Item** (`Items/item.gd`): Resource with ItemType enum and properties (name, icon, type, container_size, stackable)
 - **Inventory** (`Inventory/Inventory.gd`): Main inventory controller with bag/item management
-- **InventorySlot** (`Inventory/InventorySlot.gd`): Drag-and-drop slot component with swap functionality
+- **InventorySlot** (`Inventory/InventorySlot.gd`): 
 - **BagSlot** (`Inventory/BagSlot.gd`): Specialized slot for bag bar with container toggle
 
 ## Architecture
@@ -33,10 +33,9 @@ A minimal, opinionated inventory system for Godot 4.4+ with drag-and-drop functi
 The system uses a hybrid design:
 - **Bag Bar**: 5 fixed slots for equipping bags
 - **Container Grids**: Dynamic inventory spaces based on equipped bags' `container_size`
-- **Item Management**: Arrays `equipped_bags[5]` and `inventory_items[5][container_size]`
 
-### UI Generation
-- Procedural button creation in `_ready()`
+### UI
+- Button creation in `_ready()`
 - Container visibility toggled by bag bar clicks
 - Automatic slot updates when bags are moved
 
