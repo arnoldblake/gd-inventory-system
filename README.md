@@ -1,66 +1,58 @@
-# Inventory System
+# GD Inventory System
 
-A minimal, opinionated GDScript inventory system addon for Godot 4.4 with drag-and-drop functionality, starter items, and container support.
+A minimal, opinionated inventory system for Godot 4.4+ with drag-and-drop functionality, bag containers, and item management.
 
-
-![Image](./docs/Screenshot2025-09-11081309.png)
+![Inventory System Screenshot](./docs/Screenshot2025-09-11081309.png)
 
 ## Features
 
-- **Plugin-based**: Structured as a Godot addon for easy integration into existing projects
-- **Hybrid inventory design**: Quick-access bag slots (5 fixed slots) + expandable container storage
-- **Item types**: Support for items, bags, keys, and quest items with custom properties
-- **Drag-and-drop interface**: Intuitive item management with visual feedback and movement validation
-- **Container system**: Bags provide additional storage slots based on their container_size
-- **Dynamic UI**: Automatic button creation/removal when bags are equipped/unequipped
-- **Container toggling**: Click bag icons to show/hide inventory containers
-- **Resource-based items**: Items defined as .tres files that can be duplicated and modified at runtime
-- **Item stacking**: Configurable stacking support with max_stack_size property
+- **5-slot bag bar** with expandable container storage
+- **Drag-and-drop interface** with visual feedback
+- **Resource-based items** (.tres files) supporting ITEM, BAG, KEY, QUEST types
+- **Container system** - bags provide additional inventory slots
+- **Dynamic UI generation** - containers show/hide based on equipped bags
+- **Item stacking** with configurable stack sizes
+- **Movement validation** - prevents invalid item placements
 
-## Installation
+## Quick Start
 
-1. Copy the `addons/gd-inventory-system/` directory to your project's `addons/` folder
-2. Enable the plugin in Project Settings → Plugins → "Inventory System"
+1. Copy `addons/gd-inventory-system/` to your project's `addons/` folder
+2. Enable "GD Inventory System" in Project Settings → Plugins
+3. Add `Inventory.tscn` to your scene
+4. Configure `starter_items` array in the inspector
 
-## Usage
+## Core Classes
 
-To add an inventory to your scene:
-1. Instance the `Inventory.tscn` scene from `addons/gd-inventory-system/Inventory/Inventory.tscn`
-2. Configure the `starter_items` array in the inspector to define initial inventory items
-3. The inventory will automatically generate UI for bag slots and container grids based on equipped bags
-
-### Interaction
-- **Drag and drop**: Click and drag items between slots
-- **Container access**: Click bag icons in the bag bar to toggle their inventory containers
-- **Close containers**: Use the close button (X) on container windows
-- **Movement validation**: Only valid moves are allowed (bags to bag bar, items anywhere, etc.)
+- **Item** (`Items/item.gd`): Resource with ItemType enum and properties (name, icon, type, container_size, stackable)
+- **Inventory** (`Inventory/Inventory.gd`): Main inventory controller with bag/item management
+- **InventorySlot** (`Inventory/InventorySlot.gd`): Drag-and-drop slot component with swap functionality
+- **BagSlot** (`Inventory/BagSlot.gd`): Specialized slot for bag bar with container toggle
 
 ## Architecture
 
-### Core Components
-- **Item Resource**: Godot Resources with configurable properties (name, icon, description, type, container_size, stackable)
-- **Inventory Scene**: Main MarginContainer that procedurally generates UI from equipped bags and inventory items  
-- **Slot Component**: Custom drag-and-drop slots with item management functionality
-- **InventoryUI**: User interface controller for inventory interactions
-- **Container System**: Dynamic inventory containers that appear when bags are equipped with automatic slot management
+The system uses a hybrid design:
+- **Bag Bar**: 5 fixed slots for equipping bags
+- **Container Grids**: Dynamic inventory spaces based on equipped bags' `container_size`
+- **Item Management**: Arrays `equipped_bags[5]` and `inventory_items[5][container_size]`
 
-### File Structure
-- `addons/gd-inventory-system/Items/`: Item definitions (.gd script and .tres resources)
-- `addons/gd-inventory-system/Inventory/`: Main inventory scenes (Inventory.tscn, InventoryUI.tscn, Slot.tscn)
-- `addons/gd-inventory-system/Assets/`: Art assets (kenney asset packs)
+### UI Generation
+- Procedural button creation in `_ready()`
+- Container visibility toggled by bag bar clicks
+- Automatic slot updates when bags are moved
 
-## Item Movement Rules
+### Movement Rules
+- Only bags allowed in bag bar slots
+- Bags cannot move if they contain items
+- Bags cannot move into themselves
+- Items move freely between compatible slots
 
-- **Within same container**: Items can be moved freely between slots
-- **Bag bar to container**: Bags can be moved from bag slots to container slots if empty  
-- **Container to bag bar**: Only bags can be moved from containers to bag slots
-- **Bag bar movement**: Bags can be moved between bag bar slots (buttons auto-instantiate)
-- **Restrictions**: 
-  - Bags cannot be moved if they contain items
-  - Bags cannot be moved into themselves
-  - Only bags can occupy bag bar slots
+## File Structure
 
-## ToDo
-- Implement right click on items
-- Add item tooltips and descriptions
-- Implement item consumption/usage system
+```
+addons/gd-inventory-system/
+├── Items/                    # Item resources and definitions
+├── Inventory/               # Core inventory scenes and scripts
+├── Assets/                  # Art assets (Kenney packs)
+├── plugin.cfg              # Plugin configuration
+└── inventory_system.gd     # Main plugin script
+```
